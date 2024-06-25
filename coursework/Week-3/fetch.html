@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>replit</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+  <script>
+    async function getData(){
+      const response = await fetch("https://fakerapi.it/api/v1/persons")
+      const finalData = await response.json();
+      console.log(finalData);
+      }
+  </script>
+  <button onclick = "getData()">get the data from the api</button>
+</body>
+
+</html>
