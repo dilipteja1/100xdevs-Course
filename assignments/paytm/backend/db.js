@@ -1,5 +1,4 @@
 const mangoose = require("mongoose");
-const { User } = require("../../week-3/03-mongo/db");
 
 // connect to MongoDB
 mongoose.connect("mongodb+srv://tejadilip23898:qqDHnEarn1JKsG1q@cluster0.6ltyozn.mongodb.net/")
@@ -32,8 +31,23 @@ const UserSchema = new mangoose.Schema({
     }
 })
 
+const accountSchema = new mangoose.Schema({
+    user: {
+        type: moogoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+
+    },
+    balance: {
+        type: Number,
+        required: true
+    }
+})
+
+const Account = mongoode.model('Account', accountSchema)
 const User = mongoose.model('User', UserSchema);
 
 module.exports = {
-  User  
+  User,
+  Account
 }
