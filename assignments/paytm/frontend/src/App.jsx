@@ -1,13 +1,21 @@
+import {
+  BrowserRouter,
+  Route,
+  Routes
+} from "react-router-dom";
 
-import { SignUp } from "./components/Signup"
+import { SignUp } from "./pages/Signup"
 
 function App() {
 
   return (
-    <div className="font-bold text-4xl pt-6">
-      Hello world dilip
-
-    </div>
+    <>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/signup" element={<SignUp />} />
+      </Routes>
+    </BrowserRouter>
+    </>
   )
 }
 

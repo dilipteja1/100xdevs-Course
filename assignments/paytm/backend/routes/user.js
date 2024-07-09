@@ -2,9 +2,9 @@
 const jwt = require("jsonwebtoken");
 const express = require("express")
 const z = require("zod");
-import {User, Account} from "../db";
-import { JWT_SECRET } from "../config";
-import { authmiddleware } from "../middleware";
+const { User, Account } = require("../db");
+const { JWT_SECRET }  = require("../config");
+const  { authMiddleware } = require("../middleware");
 
 const router  = express.Router();
 
@@ -15,15 +15,16 @@ const signupSchema = z.object({
     lastname: z.string().optional()
 })
 
-const signinSchema = z.onject({
+const signinSchema = z.object({
     username: z.string().email(),
     password: z.string().min(6)
 })
-router.post("signup", authmiddleware, async (req,res) =>{
+
+router.post("/signup", async (req,res) =>{
     const {success} = signupSchema.safeParse(req.body);
     if(!success){
         res.status(411).json({
-            message: "Email already taken / Incorrect inputs"
+            message: "Incorrect inputs"
         })    
     }
     const existingUser = await User.findOne({
@@ -42,13 +43,12 @@ router.post("signup", authmiddleware, async (req,res) =>{
         lastname: req.body.lastname
     })
 
-    newUser.save()
-    const userId = user._id;
+    const userId = newUser._id;
 
     //create a dummy account to the user with some random amount
     const newAccount = await Account.create({
-        userId: userId,
-        balance: 1 + math.random() *10000
+        user: userId,
+        balance: 1 + Math.random() *10000
     })
 
     const token = jwt.sign({
@@ -63,7 +63,7 @@ router.post("signup", authmiddleware, async (req,res) =>{
 })
 
 
-router.post("signin" ,authmiddleware,  async (req,res) => {
+router.post("/signin" ,  async (req,res) => {
     body = req.body;
     const {success}  = signinSchema.safeParse(body);
     if(!success){
@@ -93,28 +93,30 @@ router.post("signin" ,authmiddleware,  async (req,res) => {
 })
 
 
-const updateBody = zod.object({
-	password: zod.string().optional(),
-    firstName: zod.string().optional(),
-    lastName: zod.string().optional(),
+const updateBody = z.object({
+	password: z.string().optional(),
+    firstName: z.string().optional(),
+    lastName: z.string().optional(),
 })
 
-router.put("/" , authmiddleware, async (req,res)=>{
-    body= req.body;
+router.put("/" , authMiddleware, async (req,res)=>{
+    const body= req.body;
     const {success} = updateBody.safeParse(body);
     if(!success){
         res.status(411).json({
             message: "Incorrect Inputs"
         })
     }
-
-    await User.updateOne({_id: req.userId}, body);
+    console.log(body);
+    await User.updateOne({
+        _id : req.userId
+    }, body )
     res.status(200).json({
         message: "Updated Successfully"
     })
 })
 
-router.get("bulk", async(req,res) => {
+router.get("/bulk", async (req,res) => {
     const filter = req.query.filter || "";
 
     const users = await User.find({

@@ -1,10 +1,10 @@
-const mangoose = require("mongoose");
+const mongoose = require("mongoose");
 
 // connect to MongoDB
 mongoose.connect("mongodb+srv://tejadilip23898:qqDHnEarn1JKsG1q@cluster0.6ltyozn.mongodb.net/")
 
-const UserSchema = new mangoose.Schema({
-    user:{
+const UserSchema = new mongoose.Schema({
+    username:{
         type:String,
         required: true,
         maxLength: 30,
@@ -31,9 +31,9 @@ const UserSchema = new mangoose.Schema({
     }
 })
 
-const accountSchema = new mangoose.Schema({
+const accountSchema = new mongoose.Schema({
     user: {
-        type: moogoose.Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: true
 
@@ -44,10 +44,11 @@ const accountSchema = new mangoose.Schema({
     }
 })
 
-const Account = mongoode.model('Account', accountSchema)
 const User = mongoose.model('User', UserSchema);
+const Account = mongoose.model('Account', accountSchema)
+
 
 module.exports = {
-  User,
-  Account
-}
+	User,
+    Account
+};
