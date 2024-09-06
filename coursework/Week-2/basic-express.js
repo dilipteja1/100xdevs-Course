@@ -9,8 +9,8 @@ function sumation(n) {
     }
     return sum;
 }
-app.get('/' , (res, resp) => {
-    const n = res.query.n;
+app.get('/' , (req, resp) => {
+    const n = req.query.n;
     const ans = sumation(n);
     resp.send("Hello world dilip teja. The answer is " + ans);
 })
