@@ -3,8 +3,8 @@ const jwt = require("jsonwebtoken");
 const express = require("express")
 const z = require("zod");
 const { User, Account } = require("../db");
-const { JWT_SECRET }  = require("../config");
-const  { authMiddleware } = require("../middleware");
+const JWT_SECRET  = require("../config");
+const  authMiddleware  = require("../middleware");
 
 const router  = express.Router();
 
@@ -99,8 +99,10 @@ const updateBody = z.object({
     lastName: z.string().optional(),
 })
 
-router.put("/" , authMiddleware, async (req,res)=>{
+// route to update user  details in the db
+router.put("/update" , authMiddleware, async (req,res)=>{
     const body= req.body;
+    console.log(body)
     const {success} = updateBody.safeParse(body);
     if(!success){
         res.status(411).json({
@@ -123,7 +125,7 @@ router.get("/bulk", async (req,res) => {
         $or: [
             {
                 firstname: {"$regex" : filter}
-            }, 
+            },
             {
                 lastname: {"$regex" : filter}
             }

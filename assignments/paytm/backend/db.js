@@ -1,7 +1,11 @@
 const mongoose = require("mongoose");
 
+const username = encodeURIComponent("tejadilip23898")
+const password = encodeURIComponent("gckaHQJAvRXaNGz2")
+
 // connect to MongoDB
-mongoose.connect("mongodb+srv://tejadilip23898:qqDHnEarn1JKsG1q@cluster0.6ltyozn.mongodb.net/")
+mongoose.connect("mongodb+srv://tejadilip23898:gckaHQJAvRXaNGz2@cluster0.6ltyozn.mongodb.net/")
+// mongodb+srv://tejadilip23898:SatyaRao%4091@cluster0.6ltyozn.mongodb.net/
 
 const UserSchema = new mongoose.Schema({
     username:{

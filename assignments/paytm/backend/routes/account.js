@@ -1,5 +1,5 @@
 const express = require("express");
-const { authMiddleware } = require("../middleware");
+const authMiddleware  = require("../middleware");
 const { Account } = require("../db");
 const { default: mongoose } = require("mongoose");
 
@@ -30,18 +30,19 @@ router.put("/transfer", authMiddleware, async (req,res) => {
         })
     }
     await Account.updateOne({
-        userId: req.userId
+        user: req.userId
     }, {
         $inc: {
             balance: -amount
         }
     }).session(session);
+    console.log(account.balance)
 
     await Account.updateOne({
-        userId : to
+        user : toAccount.user
     }, {
         $inc: {
-            balance: amount
+            balance: +amount
         }
     }).session(session);
 
@@ -51,7 +52,6 @@ router.put("/transfer", authMiddleware, async (req,res) => {
     res.status(200).json({
         message: "Transfer successful"
     })
-
 })
 
 

@@ -1,5 +1,6 @@
 //backend/config.js
-module.exports = {
-	JWT_SECRET: "your-jwt-secret"
-}
+const JWT_SECRET = "dilip_backend"
+module.exports = 
+	 JWT_SECRET
+
 
