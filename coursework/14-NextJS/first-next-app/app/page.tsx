@@ -4,8 +4,13 @@ import { use } from "react";
 
 async function getUserData() {
   await new Promise((r) => setTimeout(r, 5000))
-  const response = axios.get("https://week-13-offline.kirattechnologies.workers.dev/api/v1/user/details")
-  return (await response).data
+  try{
+    const response =  await axios.get("http://localhost:3000/api/user")
+    return (await response).data;
+  }catch(e){
+    console.log(e)
+  }
+ 
 } 
  export default async function Home() {
   const userDetails = await getUserData();
